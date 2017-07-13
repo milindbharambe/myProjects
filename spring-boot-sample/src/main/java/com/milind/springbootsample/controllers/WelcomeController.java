@@ -5,6 +5,7 @@ package com.milind.springbootsample.controllers;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
@@ -50,12 +51,14 @@ public class WelcomeController {
 
     @PostConstruct
     public void createDummyCompany() {
-        Company company = new Company("Home", "Chinchwad");
-        company = companyDao.save(company);
+        Random random = new Random();
+        int index = random.nextInt(100);
+        Company company = new Company("Home" + index, "Chinchwad" + index);
+        // company = companyDao.save(company);
 
         Set<Employee> employees = new HashSet<Employee>();
-        employees.add(new Employee("Milind", "Bhusawal", company));
-        employees.add(new Employee("Priyanka", "Achegaon", company));
+        employees.add(new Employee("Milind" + index, "Bhusawal" + index, company));
+        employees.add(new Employee("Priyanka" + index, "Achegaon" + index, company));
         employeeDao.save(employees);
     }
 

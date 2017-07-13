@@ -3,6 +3,7 @@
  */
 package com.milind.springbootsample.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * The Class Employee.
@@ -38,8 +39,9 @@ public class Employee {
     private String address;
     
     /** The company. */
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "compId")
+    @JsonBackReference
     private Company company;
 
 	/**
@@ -128,7 +130,6 @@ public class Employee {
      *
      * @return the company
      */
-    @JsonManagedReference
     public Company getCompany() {
         return company;
     }

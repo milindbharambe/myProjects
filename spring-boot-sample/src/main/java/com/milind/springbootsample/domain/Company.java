@@ -7,12 +7,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author bharamil
@@ -33,7 +34,8 @@ public class Company {
     @Column(name = "address")
 	private String address;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "company")
+    @JsonManagedReference
     private Set<Employee> employees;
 
 	public Company() {
@@ -99,7 +101,6 @@ public class Company {
 	/**
 	 * @return the employees
 	 */
-    @JsonIgnore
     public Set<Employee> getEmployees() {
 		return employees;
 	}
