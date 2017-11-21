@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import com.milind.springbootsample.domain.Employee;
  */
 @Controller
 @RequestMapping("/welcome")
+@RefreshScope
 public class WelcomeController {
 
     private Logger logger = Logger.getLogger(WelcomeController.class);
@@ -35,11 +38,14 @@ public class WelcomeController {
     @Autowired
     private EmployeeDAO employeeDao;
 
+    @Value("${test.my.property}")
+    private String testname;
+
     @RequestMapping("")
     @ResponseBody
     public String welcome() {
         logger.info("In welcome controller :: welcome() method !!");
-        return "Hi There, this is spring-boot-sample project !!";
+        return "Hi There, this is spring-boot-sample project !! with property::" + testname;
     }
 
     @RequestMapping("/usingView/{name}")
